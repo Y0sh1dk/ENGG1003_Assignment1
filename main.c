@@ -1,3 +1,16 @@
+/* read from and too files
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
+
+
+
+
 #include <stdio.h>
 
 int main() {
