@@ -1,3 +1,16 @@
+ - First line specifies what task is being done
+ - Second line specifies the key
+ - If nothing in first line give an error
+ - If notthing on second line then there is no key
+  -
+
+
+
+
+
+
+
+
 Mark Allocation
 Total marks: 12.5
 Git commits (as-per Section 5): 2 marks
