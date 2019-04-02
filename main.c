@@ -11,7 +11,6 @@ int substitution_cipher_decrypter();
 
 
 
-
 #include <stdio.h>
 
 int main() {
