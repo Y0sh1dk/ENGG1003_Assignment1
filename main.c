@@ -11,7 +11,8 @@ int substitution_cipher_encrypter();
 int substitution_cipher_decrypter();
 
 void array_zeroer(int *x, int N);
-int array_length(int *x);
+void string_lowercaser(int *x, int string_size); // (array name, string length)
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,6 +20,7 @@ int array_length(int *x);
 #include <math.h>
 
 int main() {
+    /*
     printf("Please select an option: \n");
     printf("~~~~~~~~~~Rotation Cipher~~~~~~~~~~ \n");
     printf("a) Encryption with a rotation cipher given plain text and key: \n");
@@ -27,6 +29,45 @@ int main() {
     printf("~~~~~~~~~~Substitution Cipher~~~~~~~~~~ \n");
     printf("c) Encryption with a substitution cipher given plain text and key: \n");
     printf("d) Decryption with a substitution cipher given cipher text and key: \n\n");
+    */
+    char string[] = "thisssss is a TEST string";
+
+    int string_size;
+    string_size = sizeof(string);
+
+
+
+
+    int key = 2;
+
+    printf("%d\n", string_size);
+
+    for( int counter = 0; counter < string_size; counter++) { // ONLY WORKS IN LOWER CASE AT THE MOMENT
+        int character;
+        character = string[counter];
+        if( character >= 'a' && character <= 'z') {
+            character = character + key;
+            if (character > 'z') {
+                character = character - 'z' + 'a' - 1;
+            }
+        }
+        string[counter] = character;
+    }
+
+    for( int counter = 0; counter < string_size; counter++) { // ONLY WORKS IN LOWER CASE AT THE MOMENT
+        int character;
+        character = string[counter];
+        if( character >= 'a' && character <= 'z') {
+            character = character - key;
+            if (character > 'z') {
+                character = character - 'z' + 'a' - 1;
+            }
+        }
+        string[counter] = character;
+    }
+
+
+    printf("%s", string);
 }
 
 
@@ -79,22 +120,22 @@ int substitution_cipher_decrypter() {
  * array_zeroer(arrayName, arrayLength)
  */
 void array_zeroer(int *x, int N) {
-    int i;
-    for(i = 0; i < N; i++) {
-        x[i] = 0;
+    int counter;
+    for(counter = 0; counter < N; counter++) {
+        x[counter] = 0;
     }
     return;
 }
 
 
-/*
- *  Function Name: array_length
- *
- *  Takes arguments array name
- * array_length(arrayName)
- */
-int array_length(int *x) {
-    int n;
-    n = sizeof(x);
-    return n;
+
+void string_lowercaser(int *x, string_size) {
+for(int counter = 0; counter < string_size; counter++) {
+    int character;
+    character = x[counter];
+    if (character >= 'A' && character <= 'Z') {
+        character = character + 32;
+    }
+    x[counter] = character;
+}
 }
