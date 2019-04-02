@@ -1,3 +1,5 @@
+//TODO: Clean up comments
+
 // Function Prototypes:
 int rotation_cipher_decrypter(char *string, int string_size, int key);
 int rotation_cipher_encrypter(char *string, int string_size, int key);
