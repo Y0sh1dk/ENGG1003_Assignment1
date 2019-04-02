@@ -1,23 +1,17 @@
-//TODO: Add user interface that allows user to pick which cipher method to use and to input a key
-//TODO: Add math library somehow
-//TODO: add arguments to functions
-
-
-
 // Function Prototypes:
-int rotation_cipher_decrypter();
-int rotation_cipher_encrypter();
+int rotation_cipher_decrypter(char *string, int string_size, int key);
+int rotation_cipher_encrypter(char *string, int string_size, int key);
 int substitution_cipher_encrypter();
 int substitution_cipher_decrypter();
-
 void array_zeroer(int *x, int N);
-void string_lowercaser(int *x, int string_size); // (array name, string length)
-
+void string_lowercaser(char *string, int string_size); // (array name, string length)
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+
 
 int main() {
     /*
@@ -30,42 +24,15 @@ int main() {
     printf("c) Encryption with a substitution cipher given plain text and key: \n");
     printf("d) Decryption with a substitution cipher given cipher text and key: \n\n");
     */
-    char string[] = "thisssss is a TEST string";
-
+    char string[] = "wxyz";
     int string_size;
     string_size = sizeof(string);
-
-
-
-
     int key = 2;
 
-    printf("%d\n", string_size);
+    string_lowercaser(string, sizeof(string));
 
-    for( int counter = 0; counter < string_size; counter++) { // ONLY WORKS IN LOWER CASE AT THE MOMENT
-        int character;
-        character = string[counter];
-        if( character >= 'a' && character <= 'z') {
-            character = character + key;
-            if (character > 'z') {
-                character = character - 'z' + 'a' - 1;
-            }
-        }
-        string[counter] = character;
-    }
-
-    for( int counter = 0; counter < string_size; counter++) { // ONLY WORKS IN LOWER CASE AT THE MOMENT
-        int character;
-        character = string[counter];
-        if( character >= 'a' && character <= 'z') {
-            character = character - key;
-            if (character > 'z') {
-                character = character - 'z' + 'a' - 1;
-            }
-        }
-        string[counter] = character;
-    }
-
+    rotation_cipher_encrypter(string, sizeof(string), 2);
+    rotation_cipher_decrypter(string, sizeof(string), 2);
 
     printf("%s", string);
 }
@@ -77,8 +44,18 @@ int main() {
  *
  *  Takes a input.txt file and outputs a encrypted.txt file
  */
-int rotation_cipher_encrypter() {
-
+int rotation_cipher_encrypter(char *string, int string_size, int key) {
+    for( int counter = 0; counter < string_size; counter++) { // ONLY WORKS IN LOWER CASE AT THE MOMENT
+        int character;
+        character = string[counter];
+        if( character >= 'a' && character <= 'z') {
+            character = character + key;
+            if (character > 'z') {
+                character = character - 'z' + 'a' - 1;
+            }
+        }
+        string[counter] = character;
+    }
 }
 
 
@@ -87,8 +64,18 @@ int rotation_cipher_encrypter() {
  *
  *  Takes a encrypted.txt file and outputs a decrypted.txt file
  */
-int rotation_cipher_decrypter(){
-
+int rotation_cipher_decrypter(char *string, int string_size, int key){
+    for( int counter = 0; counter < string_size; counter++) { // ONLY WORKS IN LOWER CASE AT THE MOMENT
+        int character;
+        character = string[counter];
+        if( character >= 'a' && character <= 'z') {
+            character = character - key;
+            if (character < 'a') {
+                character = 'z' - ('a' - character) + 1;
+            }
+        }
+        string[counter] = character;
+    }
 }
 
 /*
@@ -129,13 +116,15 @@ void array_zeroer(int *x, int N) {
 
 
 
-void string_lowercaser(int *x, string_size) {
+void string_lowercaser(char *string, int string_size) {
 for(int counter = 0; counter < string_size; counter++) {
     int character;
-    character = x[counter];
-    if (character >= 'A' && character <= 'Z') {
-        character = character + 32;
+    character = string[counter];
+        if (character >= 'A' && character <= 'Z') {
+            character = character + 32;
+        }
+        string[counter] = character;
     }
-    x[counter] = character;
 }
-}
+
+
