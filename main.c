@@ -45,15 +45,12 @@ int main() {
  */
 int rotation_cipher_encrypter(char *string, int string_size, int key) {
     for( int counter = 0; counter < string_size; counter++) {
-        int character;
-        character = string[counter];
-        if( character >= 'a' && character <= 'z') {
-            character = character + key;
-            if (character > 'z') {
-                character = character - 'z' + 'a' - 1;
+        if( string[counter] >= 'a' && string[counter] <= 'z') {
+            string[counter] = string[counter] + key;
+            if (string[counter] > 'z') {
+                string[counter] = string[counter] - 'z' + 'a' - 1;
             }
         }
-        string[counter] = character;
     }
 }
 
@@ -65,15 +62,12 @@ int rotation_cipher_encrypter(char *string, int string_size, int key) {
  */
 int rotation_cipher_decrypter(char *string, int string_size, int key){
     for( int counter = 0; counter < string_size; counter++) {
-        int character;
-        character = string[counter];
-        if( character >= 'a' && character <= 'z') {
-            character = character - key;
-            if (character < 'a') {
-                character = 'z' - ('a' - character) + 1;
+        if( string[counter] >= 'a' && string[counter] <= 'z') {
+            string[counter] = string[counter] - key;
+            if (string[counter] < 'a') {
+                string[counter] = 'z' - ('a' - string[counter]) + 1;
             }
         }
-        string[counter] = character;
     }
 }
 
@@ -106,8 +100,7 @@ int substitution_cipher_decrypter(char *string, int string_size, char *key) {
  * array_zeroer(arrayName, arrayLength)
  */
 void array_zeroer(int *x, int N) {
-    int counter;
-    for(counter = 0; counter < N; counter++) {
+    for(int counter = 0; counter < N; counter++) {
         x[counter] = 0;
     }
     return;
@@ -117,12 +110,9 @@ void array_zeroer(int *x, int N) {
 
 void string_lowercaser(char *string, int string_size) {
     for(int counter = 0; counter < string_size; counter++) {
-        int character;
-        character = string[counter];
-            if (character >= 'A' && character <= 'Z') {
-                character = character + 32;
+            if (string[counter] >= 'A' && string[counter] <= 'Z') {
+                string[counter] = string[counter] + 32;
             }
-        string[counter] = character;
     }
 }
 
