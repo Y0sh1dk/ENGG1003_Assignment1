@@ -6,7 +6,7 @@ int rotation_cipher_encrypter(char *string, int string_size, int key); // (array
 int substitution_cipher_encrypter(char *string, int string_size, char *key);
 int substitution_cipher_decrypter(char *string, int string_size, char *key);
 void array_zeroer(int *x, int N); // Not necessary?
-void string_lowercaser(char *string, int string_size); // (array name, string length)
+void string_uppercaser(char *string, int string_size); // (array name, string length)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,11 +27,11 @@ int main() {
     printf("d) Decryption with a substitution cipher given cipher text and key: \n\n");
     */
     char string[] = "This IS a TEST string";
-    string_lowercaser(string, sizeof(string));
-    int key = 2;
+    string_uppercaser(string, sizeof(string));
+    int key = 6;
 
-    rotation_cipher_encrypter(string, sizeof(string), 26);
-    rotation_cipher_decrypter(string, sizeof(string), 26);
+    rotation_cipher_encrypter(string, sizeof(string), key);
+    rotation_cipher_decrypter(string, sizeof(string), key);
 
     printf("%s", string);
 }
@@ -44,16 +44,12 @@ int main() {
  *  Takes arguments (string name, string length, key)
  */
 int rotation_cipher_encrypter(char *string, int string_size, int key) {
-    for( int counter = 0; counter < string_size; counter++) {
-        if( string[counter] >= 'a' && string[counter] <= 'z') {
-            string[counter] = string[counter] + key;
-            if (string[counter] > 'z') {
-                string[counter] = string[counter] - 'z' + 'a' - 1;
-            }
+    for (int counter = 0; counter < string_size; counter++) {
+        if (string[counter] >= 'A' && string[counter] <= 'Z') {
+            string[counter] = ((string[counter] - 'A' + key) % 26 + 'A');
         }
     }
 }
-
 
 /*
  *  Function Name: rotation_cipher_decrypter
@@ -62,11 +58,8 @@ int rotation_cipher_encrypter(char *string, int string_size, int key) {
  */
 int rotation_cipher_decrypter(char *string, int string_size, int key){
     for( int counter = 0; counter < string_size; counter++) {
-        if( string[counter] >= 'a' && string[counter] <= 'z') {
-            string[counter] = string[counter] - key;
-            if (string[counter] < 'a') {
-                string[counter] = 'z' - ('a' - string[counter]) + 1;
-            }
+        if( string[counter] >= 'A' && string[counter] <= 'Z') {
+            string[counter] = ((string[counter] - 'A' - key) % 26 + 'A');
         }
     }
 }
@@ -103,16 +96,15 @@ void array_zeroer(int *x, int N) {
     for(int counter = 0; counter < N; counter++) {
         x[counter] = 0;
     }
-    return;
 }
 
 
 
-void string_lowercaser(char *string, int string_size) {
+void string_uppercaser(char *string, int string_size) {
     for(int counter = 0; counter < string_size; counter++) {
-            if (string[counter] >= 'A' && string[counter] <= 'Z') {
-                string[counter] = string[counter] + 32;
-            }
+        if (string[counter] >= 'a' && string[counter] <= 'z') {
+                string[counter] = string[counter] - 32;
+        }
     }
 }
 
