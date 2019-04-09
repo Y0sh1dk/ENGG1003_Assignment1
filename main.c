@@ -32,16 +32,6 @@ int main() {
 
     rotation_cipher_encrypter_file(input_path, output_path, key);
 
-/*
-    char string[] = "This IS a TEST string";
-    string_uppercaser(string, sizeof(string));
-    int key = 6;
-
-    rotation_cipher_encrypter(string, sizeof(string), key);
-    rotation_cipher_decrypter(string, sizeof(string), key);
-
-    printf("%s", string);
- */
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -130,5 +120,3 @@ void string_uppercaser(char *string, int string_size) {
         }
     }
 }
-
-
