@@ -1,13 +1,12 @@
-//TODO: Clean up comments
-
 // Function Prototypes:
-int rotation_cipher_decrypter(char *string, int string_size, int key); // (array name, string length, key)
-int rotation_cipher_encrypter(char *string, int string_size, int key); // (array name, string length, key)
-void rotation_cipher_encrypter_file(char *input_path, char *output_path, int key );
+int rotation_cipher_decrypter_file(char *input_path, char *output_path, int key );
+int rotation_cipher_encrypter_file(char *input_path, char *output_path, int key );
+
 int substitution_cipher_encrypter(char *string, int string_size, char *key);
 int substitution_cipher_decrypter(char *string, int string_size, char *key);
+
 void array_zeroer(int *x, int N); // Not necessary?
-void string_uppercaser(char *string, int string_size); // (array name, string length)
+void string_uppercaser(char *string, int string_size);
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +28,7 @@ int main() {
     */
     char input_path[] = "input.txt";
     char output_path[] = "encrypted.txt";
-    int key = 2;
+    int key = 3;
 
     rotation_cipher_encrypter_file(input_path, output_path, key);
 
@@ -47,7 +46,7 @@ int main() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-void rotation_cipher_encrypter_file(char *input_path, char *output_path, int key ) {
+int rotation_cipher_encrypter_file(char *input_path, char *output_path, int key ) {
     FILE *input;
     FILE *output;
     input = fopen(input_path, "r");
@@ -67,35 +66,26 @@ void rotation_cipher_encrypter_file(char *input_path, char *output_path, int key
     }
 }
 
+int rotation_cipher_decrypter_file(char *input_path, char *output_path, int key ) {
+    FILE *input;
+    FILE *output;
+    input = fopen(input_path, "r");
+    if (input == NULL) {
+        perror("fopen()");
+        return 0;
+    }
+    output = fopen(output_path, "w");
 
-
-
-
-/*
- *  Function Name: rotation_cipher_encrypter
- *
- *  Takes arguments (string name, string length, key)
- */
-int rotation_cipher_encrypter(char *string, int string_size, int key) {
-    for (int counter = 0; counter < string_size; counter++) {
-        if (string[counter] >= 'A' && string[counter] <= 'Z') {
-            string[counter] = ((string[counter] - 'A' + key) % 26 + 'A');
+    while (!feof(input)) {
+        char c;
+        fscanf(input, "%c", &c);
+        if (c >= 'A' && c <= 'Z') {
+            c = ((c - 'A' - key) % 26 + 'A');
         }
+        fprintf(output, "%c", c);
     }
 }
 
-/*
- *  Function Name: rotation_cipher_decrypter
- *
- *  Takes arguments (string name, string size, key)
- */
-int rotation_cipher_decrypter(char *string, int string_size, int key){
-    for( int counter = 0; counter < string_size; counter++) {
-        if( string[counter] >= 'A' && string[counter] <= 'Z') {
-            string[counter] = ((string[counter] - 'A' - key) % 26 + 'A');
-        }
-    }
-}
 
 /*
  *  Function Name: substitution_cipher_encrypter
