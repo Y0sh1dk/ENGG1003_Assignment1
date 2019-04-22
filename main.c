@@ -54,7 +54,7 @@ int rotation_cipher_encrypter(char *input_path, char *output_path, int key ) {
     output = fopen(output_path, "w");
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
-        if (c >= 'A' && c <= 'Z') {
+        if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
             temp = c - 'A' + key;
             if (temp >= 0) {
                 c = (temp % 26 + 'A');
@@ -64,7 +64,7 @@ int rotation_cipher_encrypter(char *input_path, char *output_path, int key ) {
             }
             
         }
-        fprintf(output, "%c", c);
+        fprintf(output, "%c", c); // prints the encrypted character to file
     }
 }
 
@@ -87,7 +87,7 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
     output = fopen(output_path, "w");
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
-        if (c >= 'A' && c <= 'Z') {
+        if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
             temp = c - 'A' - key;
             if (temp >= 0) {
                 c = (temp % 26 + 'A');
@@ -97,7 +97,7 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
             }
 
         }
-        fprintf(output, "%c", c);
+        fprintf(output, "%c", c); // prints the encrypted character to file
     }
 }
 
@@ -118,13 +118,12 @@ int substitution_cipher_encrypter(char *input_path, char *output_path, char *key
     }
     output = fopen(output_path, "w");
 
-    while (fscanf(input, "%c", &c) == 1 ) {
-        if (c >= 'A' && c <= 'Z') {
+    while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
+        if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
             c = key[c-65];
         }
-        fprintf(output, "%c", c);
+        fprintf(output, "%c", c); // prints the encrypted character to file
     }
-
 }
 
 
@@ -145,11 +144,11 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
     }
     output = fopen(output_path, "w");
 
-    while (fscanf(input, "%c", &c) == 1 ) {
-        if (c >= 'A' && c <= 'Z') {
+    while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
+        if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
             c = key[c-65];
         }
-        fprintf(output, "%c", c);
+        fprintf(output, "%c", c); // prints the encrypted character to file
     }
 
 }
@@ -169,9 +168,9 @@ void array_zeroer(int *x, int N) {
 
 
 void string_uppercaser(char *string, int string_size) {
-    for(int counter = 0; counter < string_size; counter++) {
+    for (int counter = 0; counter < string_size; counter++) {
         if (string[counter] >= 'a' && string[counter] <= 'z') {
-                string[counter] = string[counter] - 32;
+            string[counter] = string[counter] - 32;
         }
     }
 }
