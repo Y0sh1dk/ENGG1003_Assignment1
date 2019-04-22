@@ -1,9 +1,9 @@
 // Function Prototypes:
-int rotation_cipher_decrypter_file(char *input_path, char *output_path, int key );
-int rotation_cipher_encrypter_file(char *input_path, char *output_path, int key );
+int rotation_cipher_decrypter(char *input_path, char *output_path, int key );
+int rotation_cipher_encrypter(char *input_path, char *output_path, int key );
 
-int substitution_cipher_encrypter(char *string, int string_size, char *key);
-int substitution_cipher_decrypter(char *string, int string_size, char *key);
+int substitution_cipher_encrypter(char *input_path, char *output_path, char *key);
+int substitution_cipher_decrypter(char *input_path, char *output_path, char *key);
 
 void array_zeroer(int *x, int N); // Not necessary?
 void string_uppercaser(char *string, int string_size);
@@ -16,21 +16,20 @@ void string_uppercaser(char *string, int string_size);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 int main() {
-    /*
-    printf("Please select an option: \n");
-    printf("~~~~~~~~~~Rotation Cipher~~~~~~~~~~ \n");
-    printf("a) Encryption with a rotation cipher given plain text and key: \n");
-    printf("b) Decryption with a rotation cipher given cipher text and key: \n");
-    printf("b) Decryption with a rotation cipher given cipher text and NO key: \n\n");
-    printf("~~~~~~~~~~Substitution Cipher~~~~~~~~~~ \n");
-    printf("c) Encryption with a substitution cipher given plain text and key: \n");
-    printf("d) Decryption with a substitution cipher given cipher text and key: \n\n");
-    */
+
+
     char input_path[] = "encrypted.txt";
     char output_path[] = "decrypted.txt";
-    int key = 1;
 
-    rotation_cipher_decrypter_file(input_path, output_path, key);
+    //rotation_cipher_decrypter(input_path, output_path, key);
+
+
+
+
+
+    char altAlphabet[] = {"ZYXWVUTSRQPONMLKJIHGFEDCBA"};
+
+    substitution_cipher_encrypter(input_path, output_path, altAlphabet);
 
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -38,11 +37,11 @@ int main() {
 
 
 /*
- *  Function Name: rotation_cipher_encrypter_file
+ *  Function Name: rotation_cipher_encrypter
  *
  *  Takes a input text file and outputs a encrypted text file
  */
-int rotation_cipher_encrypter_file(char *input_path, char *output_path, int key ) {
+int rotation_cipher_encrypter(char *input_path, char *output_path, int key ) {
     int temp;
     char c;
     FILE *input;
@@ -71,11 +70,11 @@ int rotation_cipher_encrypter_file(char *input_path, char *output_path, int key 
 
 
 /*
- *  Function Name: rotation_cipher_decrypter_file
+ *  Function Name: rotation_cipher_decrypter
  *
  *  Takes a input text file and outputs a decrypted text file
  */
-int rotation_cipher_decrypter_file(char *input_path, char *output_path, int key ) {
+int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
     char c;
     int temp;
     FILE *input;
@@ -108,7 +107,23 @@ int rotation_cipher_decrypter_file(char *input_path, char *output_path, int key 
  *
  *  Takes a input.txt file and outputs a encrypted.txt file
  */
-int substitution_cipher_encrypter(char *string, int string_size, char *key) {
+int substitution_cipher_encrypter(char *input_path, char *output_path, char *key) {
+    char c;
+    FILE *input;
+    FILE *output;
+    input = fopen(input_path, "r");
+    if (input == NULL) { // incase if incorrect input path, returns 0
+        perror("fopen()");
+        return 0;
+    }
+    output = fopen(output_path, "w");
+
+    while (fscanf(input, "%c", &c) == 1 ) {
+        if (c >= 'A' && c <= 'Z') {
+            c = key[c-65];
+        }
+        fprintf(output, "%c", c);
+    }
 
 }
 
@@ -119,11 +134,25 @@ int substitution_cipher_encrypter(char *string, int string_size, char *key) {
  *
  *  Takes a input.txt file and outputs a encrypted.txt file
  */
-int substitution_cipher_decrypter(char *string, int string_size, char *key) {
+int substitution_cipher_decrypter(char *input_path, char *output_path, char *key) {
+    char c;
+    FILE *input;
+    FILE *output;
+    input = fopen(input_path, "r");
+    if (input == NULL) { // incase if incorrect input path, returns 0
+        perror("fopen()");
+        return 0;
+    }
+    output = fopen(output_path, "w");
+
+    while (fscanf(input, "%c", &c) == 1 ) {
+        if (c >= 'A' && c <= 'Z') {
+            c = key[c-65];
+        }
+        fprintf(output, "%c", c);
+    }
 
 }
-
-
 
 /*
  *  Function Name: array_zeroer
