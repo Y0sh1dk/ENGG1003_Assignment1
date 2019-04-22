@@ -36,13 +36,19 @@ int main() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+
+/*
+ *  Function Name: rotation_cipher_encrypter_file
+ *
+ *  Takes a input text file and outputs a encrypted text file
+ */
 int rotation_cipher_encrypter_file(char *input_path, char *output_path, int key ) {
     int temp;
     char c;
     FILE *input;
     FILE *output;
-    input = fopen(input_path, "r");
-    if (input == NULL) {
+    input = fopen(input_path, "r"); 
+    if (input == NULL) { // incase if incorrect input path, returns 0
         perror("fopen()");
         return 0;
     }
@@ -63,13 +69,19 @@ int rotation_cipher_encrypter_file(char *input_path, char *output_path, int key 
     }
 }
 
+
+/*
+ *  Function Name: rotation_cipher_decrypter_file
+ *
+ *  Takes a input text file and outputs a decrypted text file
+ */
 int rotation_cipher_decrypter_file(char *input_path, char *output_path, int key ) {
     char c;
     int temp;
     FILE *input;
     FILE *output;
     input = fopen(input_path, "r");
-    if (input == NULL) {
+    if (input == NULL) { // incase if incorrect input path, returns 0
         perror("fopen()");
         return 0;
     }
