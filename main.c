@@ -26,17 +26,19 @@ int main() {
     printf("c) Encryption with a substitution cipher given plain text and key: \n");
     printf("d) Decryption with a substitution cipher given cipher text and key: \n\n");
     */
-    char input_path[] = "input.txt";
-    char output_path[] = "encrypted.txt";
-    int key = 3;
+    char input_path[] = "encrypted.txt";
+    char output_path[] = "decrypted.txt";
+    int key = 1;
 
-    rotation_cipher_encrypter_file(input_path, output_path, key);
+    rotation_cipher_decrypter_file(input_path, output_path, key);
 
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 int rotation_cipher_encrypter_file(char *input_path, char *output_path, int key ) {
+    int temp;
+    char c;
     FILE *input;
     FILE *output;
     input = fopen(input_path, "r");
@@ -46,17 +48,24 @@ int rotation_cipher_encrypter_file(char *input_path, char *output_path, int key 
     }
     output = fopen(output_path, "w");
 
-    while (!feof(input)) {
-        char c;
-        fscanf(input, "%c", &c);
+    while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') {
-            c = ((c - 'A' + key) % 26 + 'A');
+            temp = c - 'A' + key;
+            if (temp >= 0) {
+                c = (temp % 26 + 'A');
+            }
+            else if (temp < 0) { // Not necessary as there will never be a negative but for consistency between encrypter/decrypter it was added
+                c = ((temp +26) % 26 + 'A');
+            }
+            
         }
         fprintf(output, "%c", c);
     }
 }
 
 int rotation_cipher_decrypter_file(char *input_path, char *output_path, int key ) {
+    char c;
+    int temp;
     FILE *input;
     FILE *output;
     input = fopen(input_path, "r");
@@ -66,11 +75,16 @@ int rotation_cipher_decrypter_file(char *input_path, char *output_path, int key 
     }
     output = fopen(output_path, "w");
 
-    while (!feof(input)) {
-        char c;
-        fscanf(input, "%c", &c);
+    while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') {
-            c = ((c - 'A' - key) % 26 + 'A');
+            temp = c - 'A' - key;
+            if (temp >= 0) {
+                c = (temp % 26 + 'A');
+            }
+            else if (temp < 0) { //Have to have incase temp is negative, Mod is undefined of negative numbers
+                c = ((temp + 26) % 26 + 'A');
+            }
+
         }
         fprintf(output, "%c", c);
     }
