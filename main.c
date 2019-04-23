@@ -21,11 +21,12 @@ int main() {
 
     char input_path[] = "encrypted.txt";
     char output_path[] = "decrypted.txt";
-
-
-    for (int a = 0; a <= 26; a++) {
+    int a = 0;
+    while( dictionary_compare(output_path) < 0.38 && a <=26) { //above 38%
         rotation_cipher_decrypter(input_path, output_path, a);
-    }
+        a++;
+}
+
     //rotation_cipher_decrypter(input_path, output_path, 14);
 
 
@@ -89,7 +90,7 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
         perror("fopen()");
         return 0;
     }
-    output = fopen(output_path, "a"); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    output = fopen(output_path, "w"); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
@@ -105,6 +106,8 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
         fprintf(output, "%c", c); // prints the encrypted character to file
     }
     fprintf(output, "\n");
+    fclose(input);
+    fclose(output);
 }
 
 
@@ -160,25 +163,34 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
 }
 
 
-
+/*
+ *  Function Name: dictionary_compare
+ *
+ *  takes a text file and compares it to a 'top 100' word dictionary
+ *  outputs a percentage
+ *
+ *  ABOVE 40% IS GOOD
+ */
 float dictionary_compare(char *input_path) {
     FILE *input;
     input = fopen(input_path, "r");
 
     char dictionary[] = {"THEOFANDTOAINFORISONTHATBYTHISWITHIYOUITNOTORBEAREFROMATASYOURALLHAVENEWMOREANWASWEWILLHOMECANUSABOUTIFPAGEMYHASSEARCHFREEBUTOURONEOTHERDONOINFORMATIONTIMETHEYSITEHEUPMAYWHATWHICHTHEIRNEWSOUTUSEANYTHERESEEONLYSOHISWHENCONTACTHEREBUSINESSWHOWEBALSONOWHELPGETPMVIEWONLINEFIRSTAMBEENWOULDHOWWEREMESERVICESSOMETHESECLICKITSLIKESERVICETHANFIND"};
     // Dictionary[] contains top 100 words in one string, jank
-    int correct = 0;
+    float correct = 0;
     char c[50]; //max word length is 50
-    int wordcount = 0;
-    int per_correct;
+    float wordcount = 0;
+    float per_correct;
     while (fscanf(input, "%s", &c) == 1 ) {
         wordcount++;
         if (strstr(dictionary, c) != NULL) {
             correct++;
         }
     }
-    per_correct = (float)correct/wordcount;
+    fclose(input);
+    per_correct = correct/wordcount;
     return per_correct;
+
 }
 
 
