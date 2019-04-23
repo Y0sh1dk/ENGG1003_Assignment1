@@ -21,15 +21,19 @@ int main() {
     char input_path[] = "encrypted.txt";
     char output_path[] = "decrypted.txt";
 
-    //rotation_cipher_decrypter(input_path, output_path, key);
+
+    for (int a = 0; a <= 26; a++) {
+        rotation_cipher_decrypter(input_path, output_path, a);
+    }
+    //rotation_cipher_decrypter(input_path, output_path, 14);
 
 
 
 
 
-    char altAlphabet[] = {"ZYXWVUTSRQPONMLKJIHGFEDCBA"};
+    char altAlphabet[] = {"ZYXWVUTSRQPONMLKJIHGFEDCBA"}; // HAS TO HAVE 26 CHARACTER IN IT OR ELSE WILL GET WACK RESULTS
 
-    substitution_cipher_encrypter(input_path, output_path, altAlphabet);
+    //substitution_cipher_encrypter(input_path, output_path, altAlphabet);
 
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -84,7 +88,7 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
         perror("fopen()");
         return 0;
     }
-    output = fopen(output_path, "w");
+    output = fopen(output_path, "a"); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
@@ -99,6 +103,7 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
         }
         fprintf(output, "%c", c); // prints the encrypted character to file
     }
+    fprintf(output, "\n");
 }
 
 
