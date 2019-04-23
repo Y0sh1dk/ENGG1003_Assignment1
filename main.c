@@ -5,6 +5,7 @@ int rotation_cipher_encrypter(char *input_path, char *output_path, int key );
 int substitution_cipher_encrypter(char *input_path, char *output_path, char *key);
 int substitution_cipher_decrypter(char *input_path, char *output_path, char *key);
 
+float dictionary_compare(char *input_path);
 void array_zeroer(int *x, int N); // Not necessary?
 void string_uppercaser(char *string, int string_size);
 
@@ -157,6 +158,34 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
     }
 
 }
+
+
+
+float dictionary_compare(char *input_path) {
+    FILE *input;
+    input = fopen(input_path, "r");
+
+    char dictionary[] = {"THEOFANDTOAINFORISONTHATBYTHISWITHIYOUITNOTORBEAREFROMATASYOURALLHAVENEWMOREANWASWEWILLHOMECANUSABOUTIFPAGEMYHASSEARCHFREEBUTOURONEOTHERDONOINFORMATIONTIMETHEYSITEHEUPMAYWHATWHICHTHEIRNEWSOUTUSEANYTHERESEEONLYSOHISWHENCONTACTHEREBUSINESSWHOWEBALSONOWHELPGETPMVIEWONLINEFIRSTAMBEENWOULDHOWWEREMESERVICESSOMETHESECLICKITSLIKESERVICETHANFIND"};
+    // Dictionary[] contains top 100 words in one string, jank
+    int correct = 0;
+    char c[50]; //max word length is 50
+    int wordcount = 0;
+    int per_correct;
+    while (fscanf(input, "%s", &c) == 1 ) {
+        wordcount++;
+        if (strstr(dictionary, c) != NULL) {
+            correct++;
+        }
+    }
+    per_correct = (float)correct/wordcount;
+    return per_correct;
+}
+
+
+
+
+
+
 
 /*
  *  Function Name: array_zeroer
