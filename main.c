@@ -66,10 +66,10 @@ int main() {
             }
             break;
         case 3 : //Encryption with substitution cipher
-
+            substitution_cipher_encrypter(input_path, output_path, altAlphabet);
             break;
         case 4 : //Decryption with substitution cipher
-
+            substitution_cipher_decrypter(input_path, output_path, altAlphabet);
             break;
         default :
             printf("Invalid Option\n");
@@ -90,9 +90,6 @@ int main() {
     //rotation_cipher_decrypter(input_path, output_path, 14);
 
 
-
-
-    //substitution_cipher_encrypter(input_path, output_path, altAlphabet);
 
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
