@@ -6,6 +6,7 @@ int substitution_cipher_encrypter(char *input_path, char *output_path, char *key
 int substitution_cipher_decrypter(char *input_path, char *output_path, char *key);
 
 float dictionary_compare(char *input_path);
+void temp_write(char *input_path);
 void array_zeroer(int *x, int N); // Not necessary?
 void string_uppercaser(char *string, int string_size);
 
@@ -18,9 +19,68 @@ void string_uppercaser(char *string, int string_size);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 int main() {
 
-
+    char altAlphabet[] = {"ZYXWVUTSRQPONMLKJIHGFEDCBA"}; // HAS TO HAVE 26 CHARACTER IN IT OR ELSE WILL GET WACK RESULTS
     char input_path[] = "encrypted.txt";
     char output_path[] = "decrypted.txt";
+
+
+    int tmp, userInput1, userInput2, encryptionkey, decryptionkey;
+    printf("Would you like too:\n");
+    printf("1) Encrypt using rotation cipher\n");
+    printf("2) Decrypt using rotation cipher\n");
+    printf("3) Encrypt using substitution cipher\n");
+    printf("4) Decrypt using substitution cipher\n");
+    printf("Enter Option:");
+    scanf("%d", &userInput1);
+
+    switch(userInput1) {
+        case 1 : //Encryption with rotation cipher
+            printf("Please enter encryption key:\n");
+            scanf("%d", &encryptionkey);
+            rotation_cipher_encrypter(input_path, output_path, encryptionkey);
+            break;
+        case 2 : //Decryption with rotation cipher
+            printf("Do you have a decryption key?\n");
+            printf("1) Yes\n");
+            printf("2) No\n");
+            printf("Enter Option:");
+            scanf("%d", &userInput2);
+            switch(userInput2) {
+                case 1 : //With a Key
+                    printf("Please enter decryption key key:\n");
+                    scanf("%d", &decryptionkey);
+                    rotation_cipher_decrypter(input_path, output_path, decryptionkey);
+                    //do decryption with key
+                    break;
+                case 2 : // Without a Key
+                    temp_write(output_path);
+                    tmp = 0;
+                    while( dictionary_compare(output_path) < 0.38 && tmp <=26) { //above 38%
+                        rotation_cipher_decrypter(input_path, output_path, tmp);
+                        tmp++;
+                    }
+                    break;
+                default :
+                    printf("Invalid Option\n");
+                    break;
+            }
+            break;
+        case 3 : //Encryption with substitution cipher
+
+            break;
+        case 4 : //Decryption with substitution cipher
+
+            break;
+        default :
+            printf("Invalid Option\n");
+            break;
+    }
+
+    return 0;
+
+
+
+
     int a = 0;
     while( dictionary_compare(output_path) < 0.38 && a <=26) { //above 38%
         rotation_cipher_decrypter(input_path, output_path, a);
@@ -31,9 +91,6 @@ int main() {
 
 
 
-
-
-    char altAlphabet[] = {"ZYXWVUTSRQPONMLKJIHGFEDCBA"}; // HAS TO HAVE 26 CHARACTER IN IT OR ELSE WILL GET WACK RESULTS
 
     //substitution_cipher_encrypter(input_path, output_path, altAlphabet);
 
@@ -239,4 +296,13 @@ void string_uppercaser(char *string, int string_size) {
             string[counter] = string[counter] - 32;
         }
     }
+}
+
+
+//Writes 'zzz' to decrypted file so that the dictionary check words
+void temp_write(char *input_path) {
+    FILE *tempopen;
+    tempopen = fopen(input_path, "w");
+    fprintf(tempopen, "%s", "zzz");
+    fclose(tempopen);
 }
