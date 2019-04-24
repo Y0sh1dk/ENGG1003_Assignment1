@@ -58,6 +58,10 @@ int rotation_cipher_encrypter(char *input_path, char *output_path, int key ) {
         return 0;
     }
     output = fopen(output_path, "w");
+    if (output == NULL) { // incase if incorrect input path, returns 0
+        perror("fopen()");
+        return 0;
+    }
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
@@ -90,7 +94,11 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
         perror("fopen()");
         return 0;
     }
-    output = fopen(output_path, "w"); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    output = fopen(output_path, "w");
+    if (output == NULL) { // incase if incorrect input path, returns 0
+        perror("fopen()");
+        return 0;
+    }//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
@@ -126,6 +134,10 @@ int substitution_cipher_encrypter(char *input_path, char *output_path, char *key
         return 0;
     }
     output = fopen(output_path, "w");
+    if (output == NULL) { // incase if incorrect input path, returns 0
+        perror("fopen()");
+        return 0;
+    }
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
@@ -152,6 +164,10 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
         return 0;
     }
     output = fopen(output_path, "w");
+    if (output == NULL) { // incase if incorrect input path, returns 0
+        perror("fopen()");
+        return 0;
+    }
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
@@ -174,6 +190,10 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
 float dictionary_compare(char *input_path) {
     FILE *input;
     input = fopen(input_path, "r");
+    if (input == NULL) { // incase if incorrect input path, returns 0
+        perror("fopen()");
+        return 0;
+    }
 
     char dictionary[] = {"THEOFANDTOAINFORISONTHATBYTHISWITHIYOUITNOTORBEAREFROMATASYOURALLHAVENEWMOREANWASWEWILLHOMECANUSABOUTIFPAGEMYHASSEARCHFREEBUTOURONEOTHERDONOINFORMATIONTIMETHEYSITEHEUPMAYWHATWHICHTHEIRNEWSOUTUSEANYTHERESEEONLYSOHISWHENCONTACTHEREBUSINESSWHOWEBALSONOWHELPGETPMVIEWONLINEFIRSTAMBEENWOULDHOWWEREMESERVICESSOMETHESECLICKITSLIKESERVICETHANFIND"};
     // Dictionary[] contains top 100 words in one string, jank
