@@ -7,8 +7,6 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
 
 float dictionary_compare(char *input_path);
 void temp_write(char *input_path);
-void array_zeroer(int *x, int N); // Not necessary?
-void string_uppercaser(char *string, int string_size);
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,11 +18,12 @@ void string_uppercaser(char *string, int string_size);
 int main() {
 
     char altAlphabet[] = {"ZYXWVUTSRQPONMLKJIHGFEDCBA"}; // HAS TO HAVE 26 CHARACTER IN IT OR ELSE WILL GET WACK RESULTS
-    char input_path[] = "encrypted.txt";
-    char output_path[] = "decrypted.txt";
+    char input_path[] = "input.txt";
+    char output_path[] = "output.txt";
 
 
-    int tmp, userInput1, userInput2, encryptionkey, decryptionkey;
+    int tmp, userInput1, userInput2, encryptionkey, decryptionkey; // variables needed for the user interface
+    // User Interface from here down
     printf("Would you like too:\n");
     printf("1) Encrypt using rotation cipher\n");
     printf("2) Decrypt using rotation cipher\n");
@@ -50,12 +49,11 @@ int main() {
                     printf("Please enter decryption key key:\n");
                     scanf("%d", &decryptionkey);
                     rotation_cipher_decrypter(input_path, output_path, decryptionkey);
-                    //do decryption with key
                     break;
                 case 2 : // Without a Key
                     temp_write(output_path);
                     tmp = 0;
-                    while( dictionary_compare(output_path) < 0.38 && tmp <=26) { //above 38%
+                    while( dictionary_compare(output_path) < 0.38 && tmp <=26) { //If above 38% correct against top 100 english words then it is considered correct
                         rotation_cipher_decrypter(input_path, output_path, tmp);
                         tmp++;
                     }
@@ -75,23 +73,9 @@ int main() {
             printf("Invalid Option\n");
             break;
     }
-
     return 0;
-
-
-
-
-    int a = 0;
-    while( dictionary_compare(output_path) < 0.38 && a <=26) { //above 38%
-        rotation_cipher_decrypter(input_path, output_path, a);
-        a++;
 }
 
-    //rotation_cipher_decrypter(input_path, output_path, 14);
-
-
-
-}
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -107,19 +91,19 @@ int rotation_cipher_encrypter(char *input_path, char *output_path, int key ) {
     FILE *input;
     FILE *output;
     input = fopen(input_path, "r"); 
-    if (input == NULL) { // incase if incorrect input path, returns 0
+    if (input == NULL) { //If incorrect path, returns 0
         perror("fopen()");
         return 0;
     }
     output = fopen(output_path, "w");
-    if (output == NULL) { // incase if incorrect input path, returns 0
+    if (output == NULL) { //If incorrect path, returns 0
         perror("fopen()");
         return 0;
     }
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
-            temp = c - 'A' + key;
+            temp = c - 'A' + key; //Does the encryption
             if (temp >= 0) {
                 c = (temp % 26 + 'A');
             }
@@ -130,6 +114,9 @@ int rotation_cipher_encrypter(char *input_path, char *output_path, int key ) {
         }
         fprintf(output, "%c", c); // prints the encrypted character to file
     }
+    //close files
+    fclose(input);
+    fclose(output);
 }
 
 
@@ -144,15 +131,15 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
     FILE *input;
     FILE *output;
     input = fopen(input_path, "r");
-    if (input == NULL) { // incase if incorrect input path, returns 0
+    if (input == NULL) { //If incorrect path, returns 0
         perror("fopen()");
         return 0;
     }
     output = fopen(output_path, "w");
-    if (output == NULL) { // incase if incorrect input path, returns 0
+    if (output == NULL) { //If incorrect path, returns 0
         perror("fopen()");
         return 0;
-    }//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    }
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
@@ -160,14 +147,14 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
             if (temp >= 0) {
                 c = (temp % 26 + 'A');
             }
-            else if (temp < 0) { //Have to have incase temp is negative, Mod is undefined of negative numbers
+            else if (temp < 0) { //Have to have incase temp is negative, Mod (%) is undefined for negative numbers
                 c = ((temp + 26) % 26 + 'A');
             }
 
         }
         fprintf(output, "%c", c); // prints the encrypted character to file
     }
-    fprintf(output, "\n");
+    //close files
     fclose(input);
     fclose(output);
 }
@@ -176,7 +163,7 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key ) {
 /*
  *  Function Name: substitution_cipher_encrypter
  *
- *  Takes a input.txt file and outputs a encrypted.txt file
+ *  Takes a input text file and outputs a encrypted text file
  */
 int substitution_cipher_encrypter(char *input_path, char *output_path, char *key) {
     char c;
@@ -195,10 +182,13 @@ int substitution_cipher_encrypter(char *input_path, char *output_path, char *key
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
-            c = key[c-65];
+            c = key[c-65]; // key is the alternate alphabet
         }
         fprintf(output, "%c", c); // prints the encrypted character to file
     }
+    //close files
+    fclose(input);
+    fclose(output);
 }
 
 
@@ -206,7 +196,7 @@ int substitution_cipher_encrypter(char *input_path, char *output_path, char *key
 /*
  *  Function Name: substitution_cipher_decrypter
  *
- *  Takes a input.txt file and outputs a encrypted.txt file
+ *  Takes a input text file and outputs a decrypted text file
  */
 int substitution_cipher_decrypter(char *input_path, char *output_path, char *key) {
     char c;
@@ -225,11 +215,13 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
-            c = key[c-65];
+            c = key[c-65]; // key is the alternate alphabet
         }
         fprintf(output, "%c", c); // prints the encrypted character to file
     }
-
+    //close files
+    fclose(input);
+    fclose(output);
 }
 
 
@@ -239,7 +231,7 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
  *  takes a text file and compares it to a 'top 100' word dictionary
  *  outputs a percentage
  *
- *  ABOVE 40% IS GOOD
+ * Jank solution but it works
  */
 float dictionary_compare(char *input_path) {
     FILE *input;
@@ -250,53 +242,30 @@ float dictionary_compare(char *input_path) {
     }
 
     char dictionary[] = {"THEOFANDTOAINFORISONTHATBYTHISWITHIYOUITNOTORBEAREFROMATASYOURALLHAVENEWMOREANWASWEWILLHOMECANUSABOUTIFPAGEMYHASSEARCHFREEBUTOURONEOTHERDONOINFORMATIONTIMETHEYSITEHEUPMAYWHATWHICHTHEIRNEWSOUTUSEANYTHERESEEONLYSOHISWHENCONTACTHEREBUSINESSWHOWEBALSONOWHELPGETPMVIEWONLINEFIRSTAMBEENWOULDHOWWEREMESERVICESSOMETHESECLICKITSLIKESERVICETHANFIND"};
-    // Dictionary[] contains top 100 words in one string, jank
+    // Dictionary[] contains top 100 words in one string
     float correct = 0;
     char c[50]; //max word length is 50
     float wordcount = 0;
     float per_correct;
-    while (fscanf(input, "%s", &c) == 1 ) {
+    while (fscanf(input, "%s", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         wordcount++;
-        if (strstr(dictionary, c) != NULL) {
+        if (strstr(dictionary, c) != NULL) { //if the string 'c' is somewhere in the string 'dictionary, will return a value other than NULL
             correct++;
         }
     }
     fclose(input);
-    per_correct = correct/wordcount;
+    per_correct = correct/wordcount; //percentage of words in whole file that are in the 'top 100' dictionary
     return per_correct;
 
 }
 
-
-
-
-
-
-
 /*
- *  Function Name: array_zeroer
+ *  Function Name: temp_write
  *
- *  Takes arguments array name and length to zero
- * array_zeroer(arrayName, arrayLength)
+ *  writes 'zzz' to a file
+ * required so that the dictionary check words when the file is 'empty'
+ * Jank solution but it works
  */
-void array_zeroer(int *x, int N) {
-    for(int counter = 0; counter < N; counter++) {
-        x[counter] = 0;
-    }
-}
-
-
-
-void string_uppercaser(char *string, int string_size) {
-    for (int counter = 0; counter < string_size; counter++) {
-        if (string[counter] >= 'a' && string[counter] <= 'z') {
-            string[counter] = string[counter] - 32;
-        }
-    }
-}
-
-
-//Writes 'zzz' to decrypted file so that the dictionary check words
 void temp_write(char *input_path) {
     FILE *tempopen;
     tempopen = fopen(input_path, "w");
