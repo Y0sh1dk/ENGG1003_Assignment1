@@ -18,6 +18,7 @@ void temp_write(char *input_path);
 int main() {
 
     char altAlphabet[] = {"ZYXWVUTSRQPONMLKJIHGFEDCBA"}; // HAS TO HAVE 26 CHARACTER IN IT OR ELSE WILL GET WACK RESULTS
+    char realAlphabet[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
     char input_path[] = "input.txt";
     char output_path[] = "output.txt";
 
