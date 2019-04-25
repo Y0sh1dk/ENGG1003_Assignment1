@@ -3,7 +3,7 @@ int rotation_cipher_decrypter(char *input_path, char *output_path, int key );
 int rotation_cipher_encrypter(char *input_path, char *output_path, int key );
 
 int substitution_cipher_encrypter(char *input_path, char *output_path, char *key);
-int substitution_cipher_decrypter(char *input_path, char *output_path, char *key);
+int substitution_cipher_decrypter(char *input_path, char *output_path, char *key, char *real);
 
 float dictionary_compare(char *input_path);
 void temp_write(char *input_path);
@@ -17,8 +17,8 @@ void temp_write(char *input_path);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 int main() {
 
-    char altAlphabet[] = {"ZYXWVUTSRQPONMLKJIHGFEDCBA"}; // HAS TO HAVE 26 CHARACTER IN IT OR ELSE WILL GET WACK RESULTS
-    char realAlphabet[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
+    char altAlphabet[] = {"YEWHANJGPICDKLOZSUTMBVQFXR"}; // HAS TO HAVE 26 CHARACTER
+    char realAlphabet[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}; // HAS TO HAVE 26 CHARACTER
     char input_path[] = "input.txt";
     char output_path[] = "output.txt";
 
@@ -68,7 +68,7 @@ int main() {
             substitution_cipher_encrypter(input_path, output_path, altAlphabet);
             break;
         case 4 : //Decryption with substitution cipher
-            substitution_cipher_decrypter(input_path, output_path, altAlphabet);
+            substitution_cipher_decrypter(input_path, output_path, altAlphabet, realAlphabet);
             break;
         default :
             printf("Invalid Option\n");
@@ -199,7 +199,7 @@ int substitution_cipher_encrypter(char *input_path, char *output_path, char *key
  *
  *  Takes a input text file and outputs a decrypted text file
  */
-int substitution_cipher_decrypter(char *input_path, char *output_path, char *key) {
+int substitution_cipher_decrypter(char *input_path, char *output_path, char *key, char *real) {
     char c;
     FILE *input;
     FILE *output;
@@ -216,7 +216,11 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
 
     while (fscanf(input, "%c", &c) == 1 ) { //While fscanf() is successful, if not successful it wont return 1
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
-            c = key[c-65]; // key is the alternate alphabet
+            char *tmp;
+            int index;
+            tmp = strchr(key, c);
+            index = (int)(tmp-key);
+            c = real[index]; // key is the alternate alphabet
         }
         fprintf(output, "%c", c); // prints the encrypted character to file
     }
