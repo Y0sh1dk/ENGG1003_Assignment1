@@ -46,7 +46,7 @@ int main() {
             scanf("%d", &userInput2);
             switch(userInput2) {
                 case 1 : //With a Key
-                    printf("Please enter decryption key key:\n");
+                    printf("Please enter decryption key:");
                     scanf("%d", &decryptionkey);
                     rotation_cipher_decrypter(input_path, output_path, decryptionkey);
                     break;

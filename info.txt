@@ -40,6 +40,7 @@ The following marks will be awarded for various task selection methods:
 user): +0.25 marks
  Task selection with a \user friendly" menu system: +0.5 marks
  Task selection with a file header or command line arguments: +0.75 marks
+
 At the demonstrator's discretion, the following marks may be deducted:
  Comments are woefully inadequate, uninformative, or missing: -1 mark
  Code indentation is confusing, not attempted, or is in some way unnecessarily dicult to read: -1
