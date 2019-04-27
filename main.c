@@ -218,8 +218,8 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
         if (c >= 'A' && c <= 'Z') { // Checks if each character is inbetwwen the ASCII values A and Z
             char *tmp;
             int index;
-            tmp = strchr(key, c);
-            index = (int)(tmp-key);
+            tmp = strchr(key, c); // strchr() returns the pointer to the character c in the string key
+            index = (int)(tmp-key); // pointer of character - pointer of key gives the index of the character
             c = real[index]; // key is the alternate alphabet
         }
         fprintf(output, "%c", c); // prints the encrypted character to file
@@ -236,7 +236,7 @@ int substitution_cipher_decrypter(char *input_path, char *output_path, char *key
  *  takes a text file and compares it to a 'top 100' word dictionary
  *  outputs a percentage
  *
- * Jank solution but it works
+ * Wack solution but it works
  */
 float dictionary_compare(char *input_path) {
     FILE *input;
