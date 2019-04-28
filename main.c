@@ -54,7 +54,7 @@ int main() {
                 case 2 : // Without a Key
                     temp_write(output_path);
                     tmp = 0;
-                    while( dictionary_compare(output_path) < 0.45 && tmp <=26) { //If above 38% correct against top 10000 english words then it is considered correct
+                    while( dictionary_compare(output_path) < 0.45 && tmp <=26) { //If above 45% correct against top 10000 english words then it is considered correct
                         rotation_cipher_decrypter(input_path, output_path, tmp);
                         tmp++;
                     }
