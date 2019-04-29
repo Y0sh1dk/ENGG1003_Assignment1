@@ -25,6 +25,8 @@ int main() {
 
     int tmp, userInput1, userInput2, encryptionkey, decryptionkey; // variables needed for the user interface
     // User Interface from here down
+    printf("Input: %s \n", input_path);
+    printf("Output: %s \n", output_path);
     printf("Would you like too:\n");
     printf("1) Encrypt using rotation cipher\n");
     printf("2) Decrypt using rotation cipher\n");
